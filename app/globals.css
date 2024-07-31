@@ -2,32 +2,338 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    /* This color is custom-defined, not from Figma. It's used to block the transparency of the side menu on small screens when it slides in as an overlay */
+    --bg-opaque: rgb(23, 85, 97); /*#175561*/
+    --on-opaque: rgba(255, 255, 255);
+    --bg-main: rgba(1, 30, 56, 0.3); /*#011E38*/
+    --bg-hover-main: rgba(1, 30, 56, 0.4);
+
+    --on-main: rgba(255, 255, 255);
+    --bg-selected: rgba(255, 255, 255, 0.2);
+    --on-selected: rgba(255, 255, 255);
+    --bg-disabled: rgba(1, 30, 56, 0.5);
+    --on-disabled: rgba(255, 255, 255, 0.5);
+
+    --bg-primary: rgba(0, 184, 209, 0.7);
+
+    --bg-success: rgb(34, 197, 94);
+    --bg-warning: rgb(255, 152, 0);
+    --on-warning: rgb(255, 255, 255);
+
+    /* We have different red colors for background and text */
+    --bg-error: rgb(208, 74, 74); /*#D04A4A*/
+    --active-error: rgb(185, 60, 60);
+    --text-error: rgb(225, 57, 34); /*#E13922*/
+    --on-error: rgb(255, 255, 255);
+
+    --border-main: rgba(1, 30, 56, 0.3);
+
+    --input-height: 50px;
+    --input-x-padding: 15px;
+    --input-y-padding: 0;
+    --input-border-radius: 6px;
+    --input-label-color: rgb(77, 255, 212); /*#4DFFD4*/
+
+    --menu-item-height: 36px;
+    --menu-item-x-padding: 15px;
+    --menu-item-y-padding: 0;
+
+    --button-height: 53px;
+    --button-x-padding: 15px;
+    --button-sm-height: 36px;
+    --button-sm-x-padding: 12px;
+    --button-y-padding: 0;
+
+    --input-placeholder: rgb(180, 180, 180);
+
+    --base-font-size: 16px;
+
+    /* Background color to be used for buttons */
+    --bg-dark-button: rgba(1, 30, 56, 0.5);
+
+    /* Background color to be used for chips */
+    --bg-dark-chip: rgb(106, 102, 102);
+
+    --shadow-custom: 7px 7px 10px rgba(0, 0, 0, 0.25);
+    --shadow-custom2: 6px 6px 6px rgba(0, 0, 0, 0.25);
+    --shadow-custom3: 4px 4px 6px rgba(0, 0, 0, 0.25);
+
+    --mui-paper-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 5px 8px 0px rgba(0, 0, 0, 0.14),
+      0px 1px 14px 0px rgba(0, 0, 0, 0.12);
   }
+
+  body.theme-green {
+    background-image: url(./main-bg-green.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  body.theme-blue {
+    background-image: url(./main-bg-blue.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .theme-green {
+    --border-color-based-on-theme: rgba(25, 223, 211, 1);
+  }
+
+  .theme-blue {
+    --bg-opaque: rgb(29, 68, 114); /*#1d4472*/
+    --input-label-color: rgb(193, 194, 255);
+    --border-color-based-on-theme: transparent;
+  }
+
+  /* Prepend html to increase specificity */
+  html ::placeholder {
+    /* Control the default placeholder color for the whole app */
+    color: var(--input-placeholder);
+  }
+
+  /* [START] Scroll bar styles for Chrome, Edge and Safari */
+  :root {
+    --scroll-height: 6px;
+    --scroll-width: 6px;
+    --scroll-track-border-radius: 0;
+    --scroll-track-bg: transparent;
+    --scroll-track-hover-bg: transparent;
+    --scroll-track-active-bg: transparent;
+    --scroll-thumb-bg: rgba(0, 0, 0, 0.3);
+    --scroll-thumb-hover-bg: rgba(0, 0, 0, 0.5);
+    --scroll-thumb-active-bg: rgba(0, 0, 0, 0.5);
+    --scroll-thumb-border-size: 3px;
+    --scroll-thumb-border-color: transparent;
+    --scroll-thumb-border-radius: 6px;
+    --scroll-thumb-box-shadow: 0 0 2px rgba(255, 255, 255, 0.33);
+  }
+
+  ::-webkit-scrollbar {
+    height: var(--scroll-height);
+    width: var(--scroll-width);
+  }
+
+  ::-webkit-scrollbar-track {
+    border-radius: var(--scroll-track-border-radius);
+    background-color: var(--scroll-track-bg);
+  }
+
+  ::-webkit-scrollbar-track:hover {
+    background-color: var(--scroll-track-hover-bg);
+  }
+
+  ::-webkit-scrollbar-track:active {
+    background-color: var(--scroll-track-active-bg);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: var(--scroll-thumb-border-radius);
+    background-color: var(--scroll-thumb-bg);
+    border: var(--scroll-thumb-border-size) solid var(--scroll-thumb-border-color);
+    box-shadow: var(--scroll-thumb-box-shadow);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--scroll-thumb-hover-bg);
+  }
+
+  ::-webkit-scrollbar-thumb:active {
+    background-color: var(--scroll-thumb-active-bg);
+  }
+
+  .emsd-invisible-scrollbar::-webkit-scrollbar {
+    width: 0px;
+  }
+  .emsd-invisible-scrollbar::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+  .emsd-invisible-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+    box-shadow: none;
+  }
+  /* [END] Scroll bar styles */
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+/* [START] DatePicker and TimePicker dropdown */
+.MuiPickersPopper-paper.MuiPickersPopper-paper .MuiButtonBase-root {
+  font-family: var(--font-poppins);
+}
+.MuiPickersPopper-paper.MuiPickersPopper-paper .MuiButtonBase-root.Mui-selected {
+  background-color: var(--bg-selected);
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+/* "Clear" button text color  */
+.MuiPickersPopper-paper.MuiPickersPopper-paper .MuiButtonBase-root.MuiButton-textPrimary,
+/* Month year dropdown icon */
+.MuiPickersPopper-paper.MuiPickersPopper-paper .MuiPickersCalendarHeader-switchViewIcon,
+/* Week day label */
+.MuiPickersPopper-paper.MuiPickersPopper-paper .MuiDayCalendar-weekDayLabel,
+/* Left-right navigation icon */
+.MuiPickersPopper-paper.MuiPickersPopper-paper .MuiPickersArrowSwitcher-button,
+/* Day numbers */
+.MuiPickersPopper-paper.MuiPickersPopper-paper .MuiPickersDay-root {
+  color: var(--on-main);
 }
+/* Today border */
+.MuiPickersPopper-paper.MuiPickersPopper-paper .MuiPickersDay-today {
+  border-color: var(--on-main);
+}
+
+/* [END] DatePicker and TimePicker dropdown */
+
+/* [START] MuiMenu, MuiAutocomplete, and MuiPickers PAPER OVERRIDE */
+/* Declare global css since providing CustomPopper component to <MuiAutoComplete PaperComponent={CustomPaper}> destroys the keyboard navigation. */
+.MuiPickersPopper-paper.MuiPickersPopper-paper,
+.MuiMenu-paper.MuiMenu-paper,
+.MuiAutocomplete-paper.MuiAutocomplete-paper {
+  color: var(--on-opaque);
+  font-family: var(--font-poppins);
+  font-size: var(--base-font-size);
+  background: var(--bg-opaque);
+  transition-duration: 0s !important;
+  box-shadow: var(--mui-paper-shadow);
+}
+/* [END] MuiMenu, MuiAutocomplete, and MuiPickers PAPER OVERRIDE */
+
+/* [START] MuiAutocomplete dropdown LIST OVERRIDE */
+.MuiAutocomplete-paper .MuiAutocomplete-option {
+  color: var(--on-main);
+  background: var(--bg-main);
+  min-height: var(--menu-item-height);
+  display: flex;
+  align-items: center;
+  padding: 0.5rem var(--menu-item-x-padding);
+  font-family: var(--font-poppins);
+}
+
+.MuiAutocomplete-paper.MuiAutocomplete-paper.MuiAutocomplete-paper .MuiAutocomplete-option.Mui-focused,
+.MuiAutocomplete-paper.MuiAutocomplete-paper.MuiAutocomplete-paper .MuiAutocomplete-option:hover {
+  background: var(--bg-selected);
+}
+
+.MuiAutocomplete-paper.MuiAutocomplete-paper.MuiAutocomplete-paper .MuiAutocomplete-option[aria-selected='true'] {
+  background: var(--bg-selected);
+}
+
+.MuiAutocomplete-paper.MuiAutocomplete-paper.MuiAutocomplete-paper .MuiAutocomplete-option:hover[aria-selected='true'] {
+  background: var(--bg-selected);
+}
+/* [END] MuiAutocomplete dropdown LIST OVERRIDE */
+
+/* [START] 'react-datepicker' DateRangePicker override */
+.react-datepicker-wrapper {
+  width: 100%;
+}
+.react-datepicker {
+  display: block !important;
+  overflow: hidden;
+  background: var(--bg-opaque) !important;
+  color: var(--on-opaque);
+  border: none !important;
+  box-shadow: var(--mui-paper-shadow);
+}
+.react-datepicker__close-icon {
+  z-index: 1;
+}
+.react-datepicker__current-month,
+.react-datepicker__day-name,
+.react-datepicker__day {
+  color: var(--on-opaque) !important;
+}
+.react-datepicker__day:hover {
+  background-color: var(--bg-selected) !important;
+}
+.react-datepicker-popper {
+  z-index: 10 !important;
+}
+/* Applies on selected start and end date range */
+.react-datepicker__day--in-range {
+  background-color: var(--bg-selected) !important;
+  color: var(--on-selected) !important;
+}
+.react-datepicker__day--in-range:hover {
+  background-color: var(--bg-selected) !important;
+}
+/* Applies when selecting start and end date range */
+.react-datepicker__day--in-selecting-range {
+  color: var(--on-selected) !important;
+  background-color: var(--bg-selected) !important;
+}
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+  background-color: var(--bg-selected) !important;
+  color: var(--on-selected) !important;
+}
+.react-datepicker__day--keyboard-selected:hover {
+  background-color: var(--bg-selected) !important;
+}
+.react-datepicker__header {
+  background-color: var(--bg-main) !important;
+  border-bottom: none !important;
+}
+.react-datepicker__close-icon::after {
+  background-color: transparent !important;
+  color: var(--on-main) !important;
+  padding-right: 6px !important;
+  padding-left: 6px !important;
+  font-size: 28px !important;
+  height: 18px !important;
+  width: 18px !important;
+  padding-bottom: 0px !important;
+}
+.react-datepicker__close-icon:hover::after {
+  background-color: var(--bg-selected) !important;
+}
+
+.emsd-inline-datepicker--error .react-datepicker {
+  border-color: var(--error) !important;
+}
+/* [END] 'react-datepicker' DateRangePicker override */
+
+/* [START] MuiTooltip override */
+.MuiTooltip-popper .MuiTooltip-tooltip {
+  font-size: var(--base-font-size);
+  padding: 0.375rem 1.25rem;
+}
+/* [END] MuiTooltip override */
+
+/* [START] Material UI legend override */
+.MuiOutlinedInput-notchedOutline > legend {
+  font-family: var(--font-poppins);
+}
+/* [END] Material UI legend override */
+
+/* [START] Misc */
+.input-height {
+  height: var(--input-height);
+}
+/* [END] Misc */
+
+/* [START] Native input spinner override */
+
+.remove-arrow::-webkit-inner-spin-button,
+.remove-arrow::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.remove-arrow {
+  -moz-appearance: textfield;
+}
+
+/* [END] Native input spinner override */
+
+/* [START] Button Glass Effect */
+.button-glass-effect {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* Set border radius 0 to avoid corner color mismatches, and set button to overflow-hidden */
+  border-radius: 0;
+  z-index: -1;
+  background: linear-gradient(110.62deg, rgba(255, 255, 255, 0.3) 6.39%, rgba(255, 255, 255, 0) 53.34%);
+  mix-blend-mode: normal;
+  filter: drop-shadow(4px 4px 30px rgba(0, 0, 0, 0.06));
+  backdrop-filter: blur(35px);
+}
+/* [END] Button Glass Effect */
